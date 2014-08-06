@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<meta charset="utf-8">
+
+<!-- before the Polymer elements imports -->
+<script src="packages/web_components/dart_support.js"></script>
+<script src="packages/web_components/platform.js"></script>
+
+<!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
+
+<link rel="import" href="board-label.html">
+<link rel="import" href="arrivals-service.html">
+
+<!-- Other links -->
+<!-- <link rel="stylesheet" href="arrrrivals.css"> -->
+
+<!-- after the Polymer elements imports -->
+<script type="application/dart">export 'package:polymer/init.dart';</script>    
+<script async src="packages/browser/dart.js"></script>
+
+<polymer-element name="ar-board" attributes="show">
+  <template>
+    <style>
+    :host {
+      display: block;
+      width: 100%;
+    }
+    board-label {
+      margin-bottom: 30px;
+    }
+    </style>
+
+    <arrivals-service id="service" arrivals="{{arrivals}}"></arrivals-service>
+    
+    <div layout vertical center>
+      <template repeat="{{arrival in arrivals}}">
+        <board-label>
+          <h1>{{arrival.time}}</h1>
+          <h2>{{arrival.from}}</h2>
+          <h3>{{arrival.flight}}</h3>
+          <h4>{{arrival.remarks}}</h4>
+        </board-label>
+      </template>
+    </div>
+  </template>
+
+  <!--<script>
+  Polymer({
+  });
+  </script>-->
+</polymer-element>

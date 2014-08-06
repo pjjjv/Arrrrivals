@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+
+<meta charset="utf-8">
+
+<!-- before the Polymer elements imports -->
+<script src="packages/web_components/dart_support.js"></script>
+<script src="packages/web_components/platform.js"></script>
+
+<!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
+<link rel="import" href="packages/core_elements/core_ajax_dart.html">
+
+<!-- Other links -->
+<!-- <link rel="stylesheet" href="arrrrivals.css"> -->
+
+<!-- after the Polymer elements imports -->
+<script async src="packages/browser/dart.js"></script>
+
+<polymer-element name="arrivals-service" attributes="arrivals">
+  <template>
+    <style>
+    :host {
+      display: none;
+    }
+    </style>
+    <core-ajax-dart id="ajax"
+      auto
+      url="posts.json"
+      on-core-response="{{arrivalsLoaded}}"
+      handleAs="json">
+    </core-ajax-dart>
+  </template>
+  <script type="application/dart">
+    import 'dart:html';
+    import 'package:polymer/polymer.dart';
+    
+    @CustomTag('arrivals-service')
+    class ArrivalsService extends PolymerElement {
+      @published var arrivals;
+      
+      ArrivalsService.created() : super.created() {
+        print("created");
+        arrivals = [];
+      }
+      
+      void arrivalsLoaded() {
+        print("arrivalsLoaded");
+      }
+    }
+
+    main() {
+      initPolymer().run(() {
+        var ajax = querySelector('core-ajax-dart');
+        
+        var arrivals = querySelector('arrivals');
+        
+        ajax.on["core-response"].listen((event) {
+          var detail = event.detail;
+          var response = detail['response'];
+          print("core-response");
+          print(response[0]);
+          
+          arrivals = response[0];
+
+        });
+      });
+    }
+  </script>
+</polymer-element>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+    <title>Sample app</title>
+    
+    <!-- before the Polymer elements imports -->
+    <script src="packages/web_components/dart_support.js"></script>
+    <script src="packages/web_components/platform.js"></script>
+    
+    <!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
+    <link rel="import" href="packages/core_elements/core_header_panel.html">
+    <link rel="import" href="packages/core_elements/core_toolbar.html">
+    <link rel="import" href="packages/core_elements/core_icon_button.html">
+    <link rel="import" href="packages/paper_elements/paper_fab.html">
+    
+    <link rel="import" href="ar-board.html">
+    
+    <!-- Other links -->
+    <link href='//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en' rel='stylesheet' type='text/css'>
+    <!-- <link rel="stylesheet" href="arrrrivals.css"> -->
+    
+    <!-- after the Polymer elements imports -->
+    <script type="application/dart">export 'package:polymer/init.dart';</script>    
+    <script async src="packages/browser/dart.js"></script>
+
+    
+    
+    <style>  
+      html,body {
+        height: 100%;
+        margin: 0;
+        background-color: #E5E5E5;
+        font-family: 'RobotoDraft', sans-serif;
+      }
+      .container {
+        width: 80%;
+        margin: 50px auto;
+      }
+      @media (min-width: 481px) {
+        #tabs {
+          width: 200px;
+        }
+        .container {
+          width: 400px;
+        }
+      }  
+      core-header-panel {
+        height: 100%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch; 
+      }
+      core-toolbar {
+        color: rgb(255, 255, 255);
+        background-color: rgb(79, 125, 201);
+      }
+      paper-fab {
+        right: 20px;
+        bottom: 30px;
+        position: absolute;
+      }
+      #paper_ripple {
+        width: 300px;
+        height: 300px;
+        left: 700px;
+        top: 260px;
+        position: absolute;
+      }
+      #paper_toast {
+        left: 190px;
+        top: 450px;
+        position: absolute;
+      }
+      #paper_toast1 {
+        left: 170px;
+        top: 470px;
+        position: absolute;
+      }
+      paper-item {
+        font-size: 16px;
+      }
+      core-menu {
+        font-size: 16px;
+        width: 100%;
+        height: 500px;
+        left: 0px;
+        top: 0px;
+      }
+      #core_selector {
+        width: 100%;
+        height: 50px;
+        left: 840px;
+        top: 740px;
+        position: absolute;
+      }
+    </style>
+  </head>
+  <body unresolved touch-action="auto">
+    <core-header-panel mode="standard" id="core_header_panel">
+      <core-toolbar id="core_toolbar">
+        <core-icon-button icon="menu" id="core_icon_button"></core-icon-button>
+        <div id="div">Arrrrivals</div>
+      </core-toolbar>
+      
+      <paper-fab icon="av:info" id="paper_fab"></paper-fab>
+      
+      <div class="container" layout vertical center>
+        <ar-board></ar-board>
+      </div>
+    </core-header-panel>
+
+  </body>
+</html>
