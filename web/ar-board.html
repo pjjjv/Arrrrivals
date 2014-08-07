@@ -1,22 +1,16 @@
 
 <!-- before the Polymer elements imports -->
-<script src="packages/web_components/platform.js"></script>
-<script src="packages/web_components/dart_support.js"></script>
 <link rel="import" href="packages/polymer/polymer.html">
 
 <!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
 
 <link rel="import" href="board-label.html">
-<!-- <link rel="import" href="arrivals-service.html"> -->
+<link rel="import" href="arrivals-service.html">
 
 <!-- Other links -->
 <!-- <link rel="stylesheet" href="arrrrivals.css"> -->
 
-<!-- after the Polymer elements imports -->
-<script type="application/dart">export 'package:polymer/init.dart';</script>    
-<script async src="packages/browser/dart.js"></script>
-
-<polymer-element name="ar-board" attributes="show">
+<polymer-element name="ar-board">
   <template>
     <style>
     :host {
@@ -28,7 +22,7 @@
     }
     </style>
 
-    <!-- <arrivals-service id="service" arrivals="{{arrivals}}"></arrivals-service> -->
+    <arrivals-service id="service" arrivals="{{arrivals}}"></arrivals-service>
     
     <div layout vertical center>
       <template repeat="{{arrival in arrivals}}">
@@ -41,9 +35,5 @@
       </template>
     </div>
   </template>
-
-  <!--<script>
-  Polymer({
-  });
-  </script>-->
+  <script type="application/dart" src="ar-board.dart"></script>
 </polymer-element>

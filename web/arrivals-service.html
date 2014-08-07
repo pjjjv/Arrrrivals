@@ -1,7 +1,5 @@
 
 <!-- before the Polymer elements imports -->
-<script src="packages/web_components/platform.js"></script>
-<script src="packages/web_components/dart_support.js"></script>
 <link rel="import" href="packages/polymer/polymer.html">
 
 <!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
@@ -9,9 +7,6 @@
 
 <!-- Other links -->
 <!-- <link rel="stylesheet" href="arrrrivals.css"> -->
-
-<!-- after the Polymer elements imports -->
-<script async src="packages/browser/dart.js"></script>
 
 <polymer-element name="arrivals-service" attributes="arrivals">
   <template>
@@ -23,8 +18,8 @@
     <core-ajax-dart id="ajax"
       auto
       url="posts.json"
-      on-core-response="{{arrivalsLoaded}}"
-      handleAs="json">
+      handleAs="json"><!-- 
+      on-core-response="{{arrivalsLoaded}}" -->
     </core-ajax-dart>
   </template>
   <script type="application/dart">
@@ -33,19 +28,38 @@
     
     @CustomTag('arrivals-service')
     class ArrivalsService extends PolymerElement {
-      @published var arrivals;
+      @observable var arrivals;
       
       ArrivalsService.created() : super.created() {
         print("created");
-        arrivals = [];
+        
+
+        var ajax = querySelector('core-ajax-dart');
+        
+        arrivals = querySelector('arrivals');
+        
+        ajax.on["core-response"].listen((event) {
+          var detail = event.detail;
+          var response = detail['response'];
+          print("core-response");
+          print(response[0]);
+          
+          arrivals = response[0];
+    
+        });
       }
       
-      void arrivalsLoaded() {
+      void arrivalsLoaded(Event e, var detail, Node target) {
         print("arrivalsLoaded");
       }
     }
 
-    main() {
+      
+    void arrivalsLoaded(e, detail, node) {
+      print("arrivalsLoaded2");
+    }
+      
+    /*void main() {
       initPolymer().run(() {
         var ajax = querySelector('core-ajax-dart');
         
@@ -61,6 +75,6 @@
 
         });
       });
-    }
+    }*/
   </script>
 </polymer-element>
