@@ -18,7 +18,7 @@
   </template>
   <core-ajax-dart id="ajax"
     auto
-    url="posts.json"
+    url="arrivals.json"
     handleAs="json"><!-- 
     on-core-response="{{arrivalsLoaded}}" -->
   </core-ajax-dart>
@@ -28,13 +28,7 @@
     
     @CustomTag('arrivals-service')
     class ArrivalsService extends PolymerElement {
-      /*@published var arrivals2;
-      
-      @published get arrivals => arrivals2;
-      
-      @published void set arrivals(var arrivals) {
-          arrivals2 = arrivals;
-      }*/
+      @observable var arrivals;
       
       @published ArrivalsService.created() : super.created() {
         print("created");

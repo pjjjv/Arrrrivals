@@ -22,10 +22,10 @@
     }
     </style>
 
-    <arrivals-service id="service" arrivals="{{arrivals}}"></arrivals-service>
+    <arrivals-service id="service" arrivals="{{arrivalses}}"></arrivals-service>
     
     <div layout vertical center>
-      <template repeat="{{arrival in arrivals}}">
+      <template repeat="{{arrival in arrivalses}}">
         <board-label>
           <h1>{{arrival.time}}</h1>
           <h2>{{arrival.from}}</h2>
