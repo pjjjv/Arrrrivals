@@ -25,12 +25,12 @@
     <arrivals-service id="service" arrivals="{{arrivalses}}"></arrivals-service>
     
     <div layout vertical center>
-      <template repeat="{{arrival in arrivalses}}">
+      <template repeat="{{arrival in arrivals2}}">
         <board-label>
-          <h1>{{arrival.time}}</h1>
-          <h2>{{arrival.from}}</h2>
-          <h3>{{arrival.flight}}</h3>
-          <h4>{{arrival.remarks}}</h4>
+          <h1>{{arrival['time']}}</h1>
+          <h2>{{arrival['from']}}</h2>
+          <h3>{{arrival['flight']}}</h3>
+          <h4>{{arrival['remarks']}}</h4>
         </board-label>
       </template>
     </div>
