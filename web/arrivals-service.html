@@ -15,28 +15,34 @@
       display: none;
     }
     </style>
-    <core-ajax-dart id="ajax"
-      auto
-      url="posts.json"
-      handleAs="json"><!-- 
-      on-core-response="{{arrivalsLoaded}}" -->
-    </core-ajax-dart>
   </template>
+  <core-ajax-dart id="ajax"
+    auto
+    url="posts.json"
+    handleAs="json"><!-- 
+    on-core-response="{{arrivalsLoaded}}" -->
+  </core-ajax-dart>
   <script type="application/dart">
     import 'dart:html';
     import 'package:polymer/polymer.dart';
     
     @CustomTag('arrivals-service')
     class ArrivalsService extends PolymerElement {
-      @observable var arrivals;
+      /*@published var arrivals2;
       
-      ArrivalsService.created() : super.created() {
+      @published get arrivals => arrivals2;
+      
+      @published void set arrivals(var arrivals) {
+          arrivals2 = arrivals;
+      }*/
+      
+      @published ArrivalsService.created() : super.created() {
         print("created");
         
 
-        var ajax = querySelector('core-ajax-dart');
+        var ajax = querySelector('#ajax');  //cannot access shadowRoot so core-ajax-dart needs to be outside of template.
         
-        arrivals = querySelector('arrivals');
+        //arrivals = querySelector('arrivals');
         
         ajax.on["core-response"].listen((event) {
           var detail = event.detail;
@@ -49,9 +55,9 @@
         });
       }
       
-      void arrivalsLoaded(Event e, var detail, Node target) {
+      /*void arrivalsLoaded(Event e, var detail, Node target) {
         print("arrivalsLoaded");
-      }
+      }*/
     }
 
       
