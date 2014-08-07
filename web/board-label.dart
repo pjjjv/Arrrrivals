@@ -6,8 +6,3 @@ class BoardLabel extends PolymerElement {
     print("board label created");
   }
 }
-
-/*main() {
-  initPolymer().run(() {
-  });
-}*/
