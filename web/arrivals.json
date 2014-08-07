@@ -1,0 +1,14 @@
+[
+  {
+    "time": "14:00",
+    "from" : "Dubai",
+    "flight" : "BH108",
+    "remarks" : "delayed"
+  },
+  {
+    "time": "15:00",
+    "from" : "Amsterdam",
+    "flight" : "MH17",
+    "remarks" : "crashed"
+  }
+]
