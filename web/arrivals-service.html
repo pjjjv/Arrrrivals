@@ -44,7 +44,13 @@
           print("core-response");
           print(response[0]);
           
+          var lastUpdated = new DateTime.now();
+          
           arrivals = response;
+          
+          /*for (arrival in arrivals) {
+            arrival['from']= arrival['from'].toLowerCase().replace(/ /g,"");
+          }*/
     
         });
       }

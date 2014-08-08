@@ -4,6 +4,12 @@ import 'dart:collection';
 @CustomTag('ar-board')
 class Board extends PolymerElement {
   @observable List<LinkedHashMap> arrivals2;
+
+  int refresh = 3000;
+  int interval = null;
+  String width = '100%';
+  String height = 'auto';
+  String lastUpdated = 'Not updated';
         
   @observable get arrivalses { 
     print('board get arrivalses: '+arrivals2.toString());  
@@ -20,5 +26,7 @@ class Board extends PolymerElement {
         
   Board.created() : super.created() {
     print("board created");
+    $['container'].style.width = width;
+    $['container'].style.height = height;
   }
 }

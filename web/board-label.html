@@ -12,16 +12,12 @@
   <template>
     <style>
     :host {
-      position: relative;
-      background-color: white;
-      padding: 20px;
-      width: 100%;
       font-size: 1.2rem;
       font-weight: 300;
     }
     .main-label {
-      margin-bottom: 10px;
-      background-color: white;
+      background-color: black;
+      color: white;
     }
     polyfill-next-selector { content: '.main-label h1'; }
     .main-label ::content h1 {
@@ -52,11 +48,23 @@
       display: inline !important;
     }
     </style>
-    <div class="main-label" layout horizontal center>
-      <content select="h1"></content> <content select="h2"></content> <content select="h3"></content> <content select="h4"></content>
-      <paper-item label="Item" icon="settings" id="paper_item" center horizontal layout></paper-item>
-      <content></content>
-    </div>
+    <li class="main-label" layout horizontal center>
+      <div class="label">
+        <span class="label-time">
+          <content select="h1"></content>
+        </span>
+        <span class="label-from">
+          <content select="h2"></content>
+        </span>
+        <span class="label-flight">
+          <content select="h3"></content>
+        </span>
+        <span class="label-remarks">
+          <content select="h4"></content>
+        </span>
+        <content></content>
+      </div>
+    </li>
   </template>
   <script type="application/dart" src="board-label.dart"></script>
 </polymer-element>

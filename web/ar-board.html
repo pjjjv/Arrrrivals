@@ -10,29 +10,64 @@
 <!-- Other links -->
 <!-- <link rel="stylesheet" href="arrrrivals.css"> -->
 
-<polymer-element name="ar-board">
+<polymer-element name="ar-board" attributes="refresh width height">
   <template>
     <style>
     :host {
       display: block;
-      width: 100%;
+      position:relative; 
     }
-    board-label {
-      margin-bottom: 30px;
+    .container {
+      width: 100%;
+      padding: 0;
+    }
+    ul {
+        padding: 0;
+        margin: 0;
+        list-style: none;
+        display: block;
+        height: 100%;
+    }
+    ul li {
+          display: table;
+          height: 7.69%;
+          width: 100%;
+          border-bottom: 1px solid #eee;
+          -webkit-transition: all 1s;
+          -moz-transition: all 1s;
+          transition: all 1s;
+          position: relative;
+    }
+    ul.board li.main-label .label {
+        display: table-cell;
+        vertical-align: middle;
+        width: 100%;
+    }
+    ul.board li.main-label span {
+        font-size: 1.2em;
+        line-height: 2.2em;
+        height: 100%;
+        width: 47%;
+        display: block;
+        float:left;
+        padding-left: 1em;
+        position: relative;
     }
     </style>
 
     <arrivals-service id="service" arrivals="{{arrivalses}}"></arrivals-service>
     
-    <div layout vertical center>
-      <template repeat="{{arrival in arrivals2}}">
-        <board-label>
-          <h1>{{arrival['time']}}</h1>
-          <h2>{{arrival['from']}}</h2>
-          <h3>{{arrival['flight']}}</h3>
-          <h4>{{arrival['remarks']}}</h4>
-        </board-label>
-      </template>
+    <div id="container" class="container">
+      <ul class="board" layout vertical center>
+        <template id="label-template" repeat="{{arrival in arrivals2}}">
+          <board-label>
+            <h1>{{arrival['time']}}</h1>
+            <h2>{{arrival['from']}}</h2>
+            <h3>{{arrival['flight']}}</h3>
+            <h4>{{arrival['remarks']}}</h4>
+          </board-label>
+        </template>
+      </ul>
     </div>
   </template>
   <script type="application/dart" src="ar-board.dart"></script>
