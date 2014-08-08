@@ -16,55 +16,79 @@
       font-weight: 300;
     }
     .main-label {
+      border-bottom: 1px solid #eee;
+      -webkit-transition: all 1s;
+      -moz-transition: all 1s;
+      transition: all 1s;
+      position: relative;
       background-color: black;
       color: white;
+    }
+    .label {
+      display: block;
+      float: left;
+      #width: 25%;
+      #max-width:  25%; 
+      height: 100%;
+      line-height: 2.2rem;
+      vertical-align: middle;
+      text-align: left;
+      padding-left: 1rem;
+      position: relative;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .label-remarks {
+      text-align: center;
+    }
+    .label-from {
+      color: yellow;
     }
     polyfill-next-selector { content: '.main-label h1'; }
     .main-label ::content h1 {
       margin: 0 !important;
-      font-size: 1.8rem !important;
+      font-size: 1.4rem !important;
       font-weight: 300 !important;
       display: inline !important;
     }
     polyfill-next-selector { content: '.main-label h2'; }
     .main-label ::content h2 {
       margin: 0 !important;
-      font-size: 1.8rem !important;
+      font-size: 1.4rem !important;
       font-weight: 300 !important;
       display: inline !important;
     }
     polyfill-next-selector { content: '.main-label h3'; }
     .main-label ::content h3 {
       margin: 0 !important;
-      font-size: 1.8rem !important;
+      font-size: 1.4rem !important;
       font-weight: 300 !important;
       display: inline !important;
     }
     polyfill-next-selector { content: '.main-label h4'; }
     .main-label ::content h4 {
       margin: 0 !important;
-      font-size: 1.8rem !important;
+      font-size: 1.4rem !important;
       font-weight: 300 !important;
       display: inline !important;
     }
     </style>
-    <li class="main-label" layout horizontal center>
-      <div class="label">
-        <span class="label-time">
-          <content select="h1"></content>
-        </span>
-        <span class="label-from">
-          <content select="h2"></content>
-        </span>
-        <span class="label-flight">
-          <content select="h3"></content>
-        </span>
-        <span class="label-remarks">
-          <content select="h4"></content>
-        </span>
-        <content></content>
-      </div>
-    </li>
+    <div class="main-label" flex layout horizontal>
+      <span class="label label-time" flex>
+        <content select="h1"></content>
+      </span>
+      <span class="label label-from" flex three>
+        <content select="h2"></content>
+      </span>
+      <span class="label label-flight" flex>
+        <content select="h3"></content>
+      </span>
+      <span class="label label-remarks" flex two>
+        <content select="h4"></content>
+      </span>
+      <content></content>
+    </div>
   </template>
   <script type="application/dart" src="board-label.dart"></script>
 </polymer-element>

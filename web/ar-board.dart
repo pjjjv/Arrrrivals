@@ -26,7 +26,8 @@ class Board extends PolymerElement {
         
   Board.created() : super.created() {
     print("board created");
-    $['container'].style.width = width;
-    $['container'].style.height = height;
+    var board = $['board'];
+    board.style.width = width;
+    board.style.height = height;
   }
 }

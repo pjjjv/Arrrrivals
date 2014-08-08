@@ -18,6 +18,7 @@
     <link rel="import" href="packages/core_elements/core_header_panel.html">
     <link rel="import" href="packages/core_elements/core_toolbar.html">
     <link rel="import" href="packages/core_elements/core_icon_button.html">
+    <link rel="import" href="packages/core_elements/core_icons/iconsets/maps_icons.html">
     <link rel="import" href="packages/paper_elements/paper_fab.html">
     
     <!-- Other links -->
@@ -38,12 +39,9 @@
         width: 80%;
         margin: 50px auto;
       }
-      @media (min-width: 481px) {
-        #tabs {
-          width: 200px;
-        }
+      @media (min-width: 1000px) {
         .container {
-          width: 400px;
+          width: 800px;
         }
       }  
       core-header-panel {
@@ -52,8 +50,9 @@
         -webkit-overflow-scrolling: touch; 
       }
       core-toolbar {
-        color: rgb(255, 255, 255);
-        background-color: rgb(79, 125, 201);
+        color: black;
+        background-color: yellow;
+        border: 3px solid black;
       }
       paper-fab {
         right: 20px;
@@ -94,72 +93,18 @@
         top: 740px;
         position: absolute;
       }
-      
-      .tabel1 {
-      width: 1000px; 
-      background-color: black; 
-      color:white;
-      
-    display: table;
-    height: 87px;
-    word-wrap:break-word;
-      }
-      
-      .col1 {
-      text-align: center;
-      
-    display: table-cell;
-    height: 87px;
-    line-height: 87px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-wrap:break-word;
-      }
-      
-      
-      .tabel {
-      width: 400px; 
-      max-width: 400px;
-      background-color: black; 
-      color:white;
-      
-    display: block;
-    height: 87px;
-    word-wrap:break-word;
-      }
-      
-      .col {
-      text-align: center;
-      float: left;
-      
-    display: block;
-    height: 87px;
-    width: 25%;  /* (100 / numItems)% */
-    line-height: 87px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    word-wrap:break-word;
-    max-width:  25%; 
-      }
     </style>
   </head>
-  <body unresolved touch-action="auto">
+  <body fullbleed unresolved touch-action="auto">
     <core-header-panel mode="standard" id="core_header_panel">
       <core-toolbar id="core_toolbar">
-        <core-icon-button icon="menu" id="core_icon_button"></core-icon-button>
-        <div id="div">Arrrrivals</div>
+        <core-icon-button icon="maps:flights" id="core_icon_button"></core-icon-button>
+        <div id="title">Arrrrivals</div>
       </core-toolbar>
       
       <paper-fab icon="info" id="paper_fab"></paper-fab>
       
-      <div class="container" layout vertical center>
-      <div class="tabel1"><div class="col1">Hello this is a test</div><div class="col1">you your yours yever yoyo</div><div class="col1">too two to touluse too</div></div>
-      
-     
-      <div class="tabel"><div class="col">Hello this is a test</div><div class="col">you your yours yever yoyo</div><div class="col">too two to touluse too</div></div>
-       
+      <div id="container" class="container" layout vertical>
         <small>Last updated: lastUpdated</small>
         <ar-board refresh="5000"></ar-board>
         
