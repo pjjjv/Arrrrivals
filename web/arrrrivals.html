@@ -94,6 +94,55 @@
         top: 740px;
         position: absolute;
       }
+      
+      .tabel1 {
+      width: 1000px; 
+      background-color: black; 
+      color:white;
+      
+    display: table;
+    height: 87px;
+    word-wrap:break-word;
+      }
+      
+      .col1 {
+      text-align: center;
+      
+    display: table-cell;
+    height: 87px;
+    line-height: 87px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap:break-word;
+      }
+      
+      
+      .tabel {
+      width: 400px; 
+      max-width: 400px;
+      background-color: black; 
+      color:white;
+      
+    display: block;
+    height: 87px;
+    word-wrap:break-word;
+      }
+      
+      .col {
+      text-align: center;
+      float: left;
+      
+    display: block;
+    height: 87px;
+    width: 25%;  /* (100 / numItems)% */
+    line-height: 87px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap:break-word;
+    max-width:  25%; 
+      }
     </style>
   </head>
   <body unresolved touch-action="auto">
@@ -106,6 +155,11 @@
       <paper-fab icon="info" id="paper_fab"></paper-fab>
       
       <div class="container" layout vertical center>
+      <div class="tabel1"><div class="col1">Hello this is a test</div><div class="col1">you your yours yever yoyo</div><div class="col1">too two to touluse too</div></div>
+      
+     
+      <div class="tabel"><div class="col">Hello this is a test</div><div class="col">you your yours yever yoyo</div><div class="col">too two to touluse too</div></div>
+       
         <small>Last updated: lastUpdated</small>
         <ar-board refresh="5000"></ar-board>
         
