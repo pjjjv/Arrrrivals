@@ -16,71 +16,21 @@
     }
     </style>
   </template>
-  <core-ajax-dart id="ajax"
+  <!-- <core-ajax-dart id="ajax"
     auto
     url="arrivals.json"
-    handleAs="json"><!-- 
-    on-core-response="{{arrivalsLoaded}}" -->
+    handleAs="json"><!--
+    on-core-response="{{arrivalsLoaded}}" /-/->
+  </core-ajax-dart>-->
+  <!-- <core-ajax-dart id="ajax"
+    auto
+    url="https://api.flightstats.com/flex/flightstatus/rest/v2/json/airport/status/BRU/arr/2014/08/08/17?appId=90651109&appKey=aac68b094afe9df578cd81b22785b68c&utc=true&numHours=6&maxFlights=5"
+    handleAs="json">
+  </core-ajax-dart>-->
+  <core-ajax-dart id="ajax"
+    auto
+    url="FlightStatus_by_airport_defaults.json"
+    handleAs="json">
   </core-ajax-dart>
-  <script type="application/dart">
-    import 'dart:html';
-    import 'package:polymer/polymer.dart';
-    
-    @CustomTag('arrivals-service')
-    class ArrivalsService extends PolymerElement {
-      @observable var arrivals;
-      
-      @published ArrivalsService.created() : super.created() {
-        print("created");
-        
-
-        var ajax = querySelector('#ajax');  //cannot access shadowRoot so core-ajax-dart needs to be outside of template.
-        
-        //arrivals = querySelector('arrivals');
-        
-        ajax.on["core-response"].listen((event) {
-          var detail = event.detail;
-          var response = detail['response'];
-          print("core-response");
-          print(response[0]);
-          
-          var lastUpdated = new DateTime.now();
-          
-          arrivals = response;
-          
-          /*for (arrival in arrivals) {
-            arrival['from']= arrival['from'].toLowerCase().replace(/ /g,"");
-          }*/
-    
-        });
-      }
-      
-      /*void arrivalsLoaded(Event e, var detail, Node target) {
-        print("arrivalsLoaded");
-      }*/
-    }
-
-      
-    void arrivalsLoaded(e, detail, node) {
-      print("arrivalsLoaded2");
-    }
-      
-    /*void main() {
-      initPolymer().run(() {
-        var ajax = querySelector('core-ajax-dart');
-        
-        var arrivals = querySelector('arrivals');
-        
-        ajax.on["core-response"].listen((event) {
-          var detail = event.detail;
-          var response = detail['response'];
-          print("core-response");
-          print(response[0]);
-          
-          arrivals = response[0];
-
-        });
-      });
-    }*/
-  </script>
+  <script type="application/dart" src="arrivals-service.dart"></script>
 </polymer-element>

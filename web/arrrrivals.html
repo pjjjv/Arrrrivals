@@ -1,125 +1,161 @@
 <!DOCTYPE html>
 
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
-    <title>Sample app</title>
-    
-    <!-- before the Polymer elements imports -->
-    <script src="packages/web_components/platform.js"></script>
-    <script src="packages/web_components/dart_support.js"></script>
-    <!-- <link rel="import" href="packages/polymer/polymer.html"> -->
-    
-    <!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
-    <!-- <link rel="import" href="board-label.html"> -->
-    <link rel="import" href="ar-board.html">
-    
-    <link rel="import" href="packages/core_elements/core_header_panel.html">
-    <link rel="import" href="packages/core_elements/core_toolbar.html">
-    <link rel="import" href="packages/core_elements/core_icon_button.html">
-    <link rel="import" href="packages/core_elements/core_icons/iconsets/maps_icons.html">
-    <link rel="import" href="packages/paper_elements/paper_fab.html">
-    
-    <!-- Other links -->
-    <link href='//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en' rel='stylesheet' type='text/css'>
-    <!-- <link rel="stylesheet" href="arrrrivals.css"> -->
-    
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+  content="width=device-width, minimum-scale=1.0, initial-scale=1.0, user-scalable=yes">
+<title>Sample app</title>
 
-    
-    
-    <style>  
-      html,body {
-        height: 100%;
-        margin: 0;
-        background-color: #E5E5E5;
-        font-family: 'RobotoDraft', sans-serif;
-      }
-      .container {
-        width: 80%;
-        margin: 50px auto;
-      }
-      @media (min-width: 1000px) {
-        .container {
-          width: 800px;
-        }
-      }  
-      core-header-panel {
-        height: 100%;
-        overflow: auto;
-        -webkit-overflow-scrolling: touch; 
-      }
-      core-toolbar {
-        color: black;
-        background-color: yellow;
-        border: 3px solid black;
-      }
-      paper-fab {
-        right: 20px;
-        bottom: 30px;
-        position: absolute;
-      }
-      #paper_ripple {
-        width: 300px;
-        height: 300px;
-        left: 700px;
-        top: 260px;
-        position: absolute;
-      }
-      #paper_toast {
-        left: 190px;
-        top: 450px;
-        position: absolute;
-      }
-      #paper_toast1 {
-        left: 170px;
-        top: 470px;
-        position: absolute;
-      }
-      paper-item {
-        font-size: 16px;
-      }
-      core-menu {
-        font-size: 16px;
-        width: 100%;
-        height: 500px;
-        left: 0px;
-        top: 0px;
-      }
-      #core_selector {
-        width: 100%;
-        height: 50px;
-        left: 840px;
-        top: 740px;
-        position: absolute;
-      }
-    </style>
-  </head>
-  <body fullbleed unresolved touch-action="auto">
-    <core-header-panel mode="standard" id="core_header_panel">
-      <core-toolbar id="core_toolbar">
-        <core-icon-button icon="maps:flights" id="core_icon_button"></core-icon-button>
-        <div id="title">Arrrrivals</div>
-      </core-toolbar>
-      
-      <paper-fab icon="info" id="paper_fab"></paper-fab>
-      
-      <div id="container" class="container" layout vertical>
-        <small>Last updated: lastUpdated</small>
-        <ar-board refresh="5000"></ar-board>
-        
-        <!-- <board-label>
+<!-- before the Polymer elements imports -->
+<script src="packages/web_components/platform.js"></script>
+<script src="packages/web_components/dart_support.js"></script>
+<!-- <link rel="import" href="packages/polymer/polymer.html"> -->
+
+<!-- Dart core-elements/paper-elements use underscores not dashes in the file names -->
+<!-- <link rel="import" href="board-label.html"> -->
+<link rel="import" href="ar-board.html">
+
+<link rel="import" href="packages/core_elements/core_header_panel.html">
+<link rel="import" href="packages/core_elements/core_toolbar.html">
+<link rel="import"
+  href="packages/core_elements/core_icons/iconsets/maps_icons.html">
+<link rel="import"
+  href="packages/core_elements/core_icons/iconsets/icons.html">
+<link rel="import" href="packages/paper_elements/paper_fab.html">
+<link rel="import" href="packages/paper_elements/paper_dialog.html">
+<link rel="import" href="packages/paper_elements/paper_button.html">
+<link rel="import"
+  href="packages/paper_elements/paper_dialog_transition.html">
+<link rel="import" href="packages/paper_elements/paper_icon_button.html">
+
+<!-- Other links -->
+<link
+  href='//fonts.googleapis.com/css?family=RobotoDraft:regular,bold,italic,thin,light,bolditalic,black,medium&lang=en'
+  rel='stylesheet' type='text/css'>
+<!-- <link rel="stylesheet" href="arrrrivals.css"> -->
+
+<style>
+html,body {
+  height: 100%;
+  margin: 0;
+  font-family: 'RobotoDraft', sans-serif;
+}
+
+html {
+  background: url(5007988523_f934b6ceef_o.jpg) no-repeat center center
+    fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+.container {
+  width: 80%;
+  margin: 50px auto;
+}
+
+@media ( min-width : 1000px) {
+  .container {
+    width: 800px;
+  }
+}
+
+core-header-panel {
+  height: 100%;
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+core-toolbar {
+  color: black;
+  background-color: yellow;
+  border: 3px solid black;
+}
+
+paper-fab {
+  right: 20px;
+  bottom: 30px;
+  position: absolute;
+  background-color: #eee;
+}
+
+#paper_ripple {
+  width: 300px;
+  height: 300px;
+  left: 700px;
+  top: 260px;
+  position: absolute;
+}
+
+#paper_toast {
+  left: 190px;
+  top: 450px;
+  position: absolute;
+}
+
+#paper_toast1 {
+  left: 170px;
+  top: 470px;
+  position: absolute;
+}
+
+paper-item {
+  font-size: 16px;
+}
+
+core-menu {
+  font-size: 16px;
+  width: 100%;
+  height: 500px;
+  left: 0px;
+  top: 0px;
+}
+
+#core_selector {
+  width: 100%;
+  height: 50px;
+  left: 840px;
+  top: 740px;
+  position: absolute;
+}
+</style>
+</head>
+<body fullbleed unresolved touch-action="auto">
+  <core-header-panel mode="standard" id="core_header_panel">
+  <core-toolbar id="core_toolbar"> <paper-icon-button
+    icon="maps:flights" id="icon"></paper-icon-button>
+  <div id="title">Arrrrivals: Brussels (BRU)</div>
+  </core-toolbar> <paper-fab icon="info-outline" id="fab"></paper-fab>
+
+  <div id="container" class="container" layout vertical>
+    <small>Last updated: lastUpdated</small>
+    <ar-board refresh="5000"></ar-board>
+
+    <!-- <board-label>
           <h1>Time</h1>
           <h2>From</h2>
           <h3>Flight</h3>
           <h4>remarks</h4>
         </board-label> -->
-      </div>
-    </core-header-panel>
+  </div>
+  </core-header-panel>
 
-    <!-- after the Polymer elements imports -->
-    <script type="application/dart">export 'package:polymer/init.dart';</script>
-    <!-- <script type="application/dart" src="arrrrivals.dart"></script> -->
-    <script async src="packages/browser/dart.js"></script>
-  </body>
+  <paper-dialog id="dialog" heading="Info on Arrrrivals"
+    transition="paper-transition-center" backdrop="true">
+  <p>Made with Polymer and Dart in August 2014.</p>
+  <p>This flight arrival board demo was created by pjv.</p>
+  <p>
+    Background CC-BY 2.0 <a
+      href="https://www.flickr.com/photos/jeffpang/5007988523">Jeff
+      Pang via Flickr</a>.
+  </p>
+  <paper-button label="Close" dismissive autofocus></paper-button> </paper-dialog>
+
+  <!-- after the Polymer elements imports -->
+  <!-- <script type="application/dart">export 'package:polymer/init.dart';</script> -->
+  <script type="application/dart" src="arrrrivals.dart"></script>
+  <script async src="packages/browser/dart.js"></script>
+</body>
 </html>

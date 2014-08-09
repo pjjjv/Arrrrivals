@@ -1,15 +1,20 @@
 import 'dart:html';
 import 'package:polymer/polymer.dart';
+export 'package:polymer/init.dart';
 
 
 
-
-arrivalsLoaded(e, detail, node) {
-  print("arrivalsLoaded4");
+void infoTapped(Event e) {
+  print("infoTapped");
+  var dialog = querySelector('#dialog');
+  dialog.toggle();
 }
 
 void main() {
-  /*initPolymer().run(() {
+  initPolymer().run(() {
     print("main1");
-  });*/
+  });
+
+  querySelector('#fab').on['tap'].listen(infoTapped);
+  //addEventListener('tap', infoTapped);
 }

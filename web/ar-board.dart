@@ -19,7 +19,7 @@ class Board extends PolymerElement {
   @observable void set arrivalses(var arrivals3) {
     arrivals2 = arrivals3;
     print('board set arrivalses: '+arrivals2.toString()); 
-    if (arrivals2 != null) {
+    if (arrivals2 != null && arrivals2 != []) {
       print('      set arrivalses1: '+arrivals2[0]['time'].toString());  
     } 
   }

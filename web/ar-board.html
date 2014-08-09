@@ -15,7 +15,7 @@
     <style>
     :host {
       display: block;
-      position:relative; 
+      position:relative;
     }
     .board {
       display: block;
@@ -25,11 +25,13 @@
       padding: 0;
       margin: 0;
       word-wrap:break-word;
+      border: 1px solid #eee;
+      border-bottom: 0px;
     }
     </style>
 
     <arrivals-service id="service" arrivals="{{arrivalses}}"></arrivals-service>
-    
+
     <div id="board" class="board" layout vertical>
       <template repeat="{{arrival in arrivals2}}">
         <board-label>
