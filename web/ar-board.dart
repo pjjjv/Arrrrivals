@@ -3,31 +3,24 @@ import 'dart:collection';
 
 @CustomTag('ar-board')
 class Board extends PolymerElement {
-  @observable List<LinkedHashMap> arrivals2;
+  @published List<LinkedHashMap> arrivals;
+  @published String lastUpdated;
 
-  int refresh = 3000;
-  int interval = null;
-  String width = '100%';
-  String height = 'auto';
-  String lastUpdated = 'Not updated';
-        
-  @observable get arrivalses { 
-    print('board get arrivalses: '+arrivals2.toString());  
-    return arrivals2;
-  }
-  
-  @observable void set arrivalses(var arrivals3) {
-    arrivals2 = arrivals3;
-    print('board set arrivalses: '+arrivals2.toString()); 
-    if (arrivals2 != null && arrivals2 != []) {
-      print('      set arrivalses1: '+arrivals2[0]['time'].toString());  
-    } 
-  }
-        
+  @published String width = '100%';
+  @published String height = 'auto';
+  @published int refresh = 140;
+
   Board.created() : super.created() {
     print("board created");
     var board = $['board'];
     board.style.width = width;
     board.style.height = height;
   }
+
+  /*
+   * <template bind if="{{(arrivals | length) == 10}}">
+   *
+  int length(List<LinkedHashMap> element){
+    return element.length;
+  }*/
 }

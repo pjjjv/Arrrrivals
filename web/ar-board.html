@@ -30,17 +30,24 @@
     }
     </style>
 
-    <arrivals-service id="service" arrivals="{{arrivalses}}" lastUpdated="{{lastUpdated}}"></arrivals-service>
+    <arrivals-service id="service" arrivals="{{arrivals}}" lastUpdated="{{lastUpdated}}" refresh={{refresh}}></arrivals-service>
 
     <small>Last updated: {{lastUpdated}}</small>
     <div id="board" class="board" layout vertical>
-      <template repeat="{{arrival in arrivals2}}">
-        <board-label>
-          <h1>{{arrival['time']}}</h1>
-          <h2>{{arrival['from']}}</h2>
-          <h3>{{arrival['flight']}}</h3>
-          <h4>{{arrival['remarks']}}</h4>
-        </board-label>
+      <template bind>
+        <template bind repeat="{{arrival in arrivals}}" if="{{arrivals.length > 0}}">
+          <board-label>
+            <h1>{{arrival['time']}}</h1>
+            <h2>{{arrival['from']}}</h2>
+            <h3>{{arrival['flight']}}</h3>
+            <h4>{{arrival['remarks']}}</h4>
+          </board-label>
+        </template>
+        <template bind if="{{arrivals.length == 0}}">
+          <board-label>
+          <h1>No flights found</h1>
+          </board-label>
+        </template>
       </template>
     </div>
   </template>

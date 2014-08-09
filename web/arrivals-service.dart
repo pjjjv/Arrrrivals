@@ -14,6 +14,7 @@ getTypeName(dynamic obj) {
 @CustomTag('arrivals-service')
 class ArrivalsService extends PolymerElement {
   @observable List<LinkedHashMap> arrivals = new List<LinkedHashMap>();
+  @published int refresh = 120;
   Timer timer;
 
 
@@ -32,7 +33,7 @@ class ArrivalsService extends PolymerElement {
   /*@published
   String get lastUpdated;
   set lastUpdated(String lu);*/
-  @published String lastUpdated;
+  @observable String lastUpdated = "Not updated";
 
 
   final Map<String, String> statusDict =
@@ -48,7 +49,6 @@ class ArrivalsService extends PolymerElement {
 
   @published ArrivalsService.created() : super.created() {
     //print("created");
-    lastUpdated = "Not updated";
   }
 
   @override
@@ -61,7 +61,7 @@ class ArrivalsService extends PolymerElement {
     $['ajax'].on["core-response"].listen(parseResponse);
 
     //Start a timer, so we do the ajax every so many seconds.
-    timer = new Timer.periodic(new Duration(seconds: 120), handleTimeout);
+    timer = new Timer.periodic(new Duration(seconds: refresh), handleTimeout);
   }
 
   @override
