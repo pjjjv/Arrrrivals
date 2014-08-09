@@ -19,10 +19,24 @@
       display: block;
       position:relative;
     }
+
+    .bg {
+      background-color: #eee;
+    }
+
+    :host([animate]:not(.core-selected)) .bg {
+      z-index: -1;
+    }
+    .card {
+      background-color: white;
+      box-sizing: border-box;
+      width: 100%;
+    }
+
     .board {
       display: block;
-      width: 100%;
-      max-width: 100%;
+      #width: 100%;
+      #max-width: 100%;
       height: 100%;
       padding: 0;
       margin: 0;
@@ -33,11 +47,11 @@
     .label {
       box-sizing: border-box;
       position: relative;
-      transition: box-shadow 0.8s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.8s;
+      transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.28s;
     }
 
 
-    .multi-column .list {
+    .multi-column .board {
       display: -webkit-flex;
       display: flex;
       -webkit-flex-flow: column wrap;
@@ -46,13 +60,17 @@
       align-content: stretch;
     }
 
+    @media ( min-width : 1000px) {
+      .multi-column .board {
+        max-height: 200px;
+      }
+    }
+
 
     [animate] .label.rising {
       box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
       z-index: 10001 !important;
       background-color: white;
-    }
-    .multi-column [animate] .label.rising {
     }
     </style>
 
@@ -62,51 +80,57 @@
 
 
 
-    <template bind><!-- bind is needed for proper if-conditions parsing.-->
-      <template bind if="{{true}}">
-        <core-animated-pages id="pages" selected="{{selected}}" transitions="hero-transition">
+    <core-animated-pages id="pages" selected="{{selected}}" transitions="hero-transition"  class="card {{ columns>1 ?'multi-column': '' }}" >
 
-        <section id="page1">
-        <div id="board1" class="board" layout vertical>
-          <paper-shadow z="3"></paper-shadow>
-          <template repeat="{{arrival in arrivals1}}">
-            <board-label class="label {{arrival['rising'] ? 'rising':''}}" hero-id="{{arrival['time']}}" hero style="{{ columns>1 ? 'width:' + (1/columns*100).toString() + '%' : '' }}" >
-              <h1>{{arrival['time']}}</h1>
-              <h2>{{arrival['from']}}</h2>
-              <h3>{{arrival['flight']}}</h3>
-              <h4>{{arrival['remarks']}}</h4>
-              <div class="delta" hidden?="{{!arrival['rising']}}">UP</div>
-            </board-label>
-          </template>
-        </div>
-        </section>
-
-        <section id="page2">
-        <div id="board2" class="board" layout vertical>
-          <paper-shadow z="3"></paper-shadow>
-          <template repeat="{{arrival in arrivals2}}">
-            <board-label class="label {{arrival['rising'] ? 'rising':''}}" hero-id="{{arrival['time']}}" hero style="{{ columns>1 ? 'width:' + (1/columns*100).toString() + '%' : '' }}" >
-              <h1>{{arrival['time']}}</h1>
-              <h2>{{arrival['from']}}</h2>
-              <h3>{{arrival['flight']}}</h3>
-              <h4>{{arrival['remarks']}}</h4>
-              <div class="delta" hidden?="{{!arrival['rising']}}">UP</div>
-            </board-label>
-          </template>
-        </div>
-        </section>
-
-        </core-animated-pages>
-      </template>
-
-      <template bind if="{{false}}">
-        <div id="board3" class="board" layout vertical>
-          <board-label>
-          <h1>No flights found</h1>
+    <section id="page1">
+    <div id="board1" class="board" layout vertical>
+      <div class="bg" fit dummy></div>
+      <paper-shadow z="3"></paper-shadow>
+      <template bind><!-- bind is needed for proper if-conditions parsing.-->
+        <template repeat="{{arrival in arrivals1}}" if="{{arrivals1.length > 0}}">
+          <board-label class="label {{arrival['rising'] ? 'rising':''}}" hero-id="{{arrival['time']}}" hero style="{{ columns>1 ? 'width:' + (1/columns*100).toString() + '%' : '' }}" >
+            <h1>{{arrival['time']}}</h1>
+            <h2>{{arrival['from']}}</h2>
+            <h3>{{arrival['flight']}}</h3>
+            <h4>{{arrival['remarks']}}</h4>
+            <div class="delta" hidden?="{{!arrival['rising']}}">UP</div>
           </board-label>
-        </div>
+        </template>
+
+        <template if="{{arrivals1.length == 0}}">
+          <board-label class="label {{arrival['rising'] ? 'rising':''}}" hero-id="none" hero style="{{ columns>1 ? 'width:' + (1/columns*100).toString() + '%' : '' }}" >
+            <h1>No flights found</h1>
+          </board-label>
+        </template>
       </template>
-    </template>
+    </div>
+    </section>
+
+    <section id="page2">
+    <div id="board2" class="board" layout vertical>
+      <div class="bg" fit dummy></div>
+      <paper-shadow z="3"></paper-shadow>
+      <template bind><!-- bind is needed for proper if-conditions parsing.-->
+        <template repeat="{{arrival in arrivals2}}" if="{{arrivals2.length > 0}}">
+          <board-label class="label {{arrival['rising'] ? 'rising':''}}" hero-id="{{arrival['time']}}" hero style="{{ columns>1 ? 'width:' + (1/columns*100).toString() + '%' : '' }}" >
+            <h1>{{arrival['time']}}</h1>
+            <h2>{{arrival['from']}}</h2>
+            <h3>{{arrival['flight']}}</h3>
+            <h4>{{arrival['remarks']}}</h4>
+            <div class="delta" hidden?="{{!arrival['rising']}}">UP</div>
+          </board-label>
+        </template>
+
+        <template if="{{arrivals2.length == 0}}">
+          <board-label class="label {{arrival['rising'] ? 'rising':''}}" hero-id="none" hero style="{{ columns>1 ? 'width:' + (1/columns*100).toString() + '%' : '' }}" >
+            <h1>No flights found</h1>
+          </board-label>
+        </template>
+      </template>
+    </div>
+    </section>
+
+    </core-animated-pages>
 
   </template>
   <script type="application/dart" src="ar-board.dart"></script>

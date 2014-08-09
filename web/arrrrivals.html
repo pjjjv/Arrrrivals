@@ -124,6 +124,14 @@ core-menu {
 #fab::shadow #ripple {
   color: yellow;
 }
+
+#fab {
+  z-index: 20000;
+}
+
+#dialog {
+  z-index: 20001;
+}
 </style>
 </head>
 <body fullbleed unresolved touch-action="auto">
@@ -135,7 +143,7 @@ core-menu {
 
   <div id="container" class="container" layout vertical>
 
-    <ar-board refresh="60"></ar-board>
+    <ar-board refresh="60" columns="1"></ar-board>
 
     <!-- <board-label>
           <h1>Time</h1>

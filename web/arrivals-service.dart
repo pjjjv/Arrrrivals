@@ -60,12 +60,8 @@ class ArrivalsService extends PolymerElement {
     //ajax = querySelector('#ajax'); //cannot access shadowRoot so core-ajax-dart needs to be outside of template. -> no, automatic node selection ($['']) does work with core-ajax-dart inside template, but only from the moment of the 'attached' lifecycle callback.
     $['ajax'].on["core-response"].listen(parseResponse);
 
-    //Get the url parameters
-    String query = document.window.location.href;
-    if(/*query.indexOf('test') >= 0*/true){//TODO
-      //Start a timer, so we do the ajax every so many seconds.
-      timer = new Timer.periodic(new Duration(seconds: refresh), handleTimeout);
-    }
+    //Start a timer, so we do the ajax every so many seconds.
+    timer = new Timer.periodic(new Duration(seconds: refresh), handleTimeout);
   }
 
   @override

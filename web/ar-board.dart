@@ -2,6 +2,7 @@ import 'package:polymer/polymer.dart';
 import 'dart:collection';
 import 'dart:math';
 import 'dart:async';
+import 'dart:html';
 
 @CustomTag('ar-board')
 class Board extends PolymerElement {
@@ -67,8 +68,12 @@ class Board extends PolymerElement {
     }*/
     randomizer = new Random(42);
 
-    //Start a timer, to randomize list order
-    flipTimer = new Timer.periodic(new Duration(seconds: 10), handleFlipTimeout);
+    //Get the url parameters
+    String query = document.window.location.href;
+    if(query.indexOf('test') >= 0){
+      //Start a timer, to randomize list order
+      flipTimer = new Timer.periodic(new Duration(seconds: 10), handleFlipTimeout);
+    }
   }
 
   @override
