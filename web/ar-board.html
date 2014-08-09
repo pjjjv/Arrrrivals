@@ -7,16 +7,20 @@
 <link rel="import" href="board-label.html">
 <link rel="import" href="arrivals-service.html">
 <link rel="import" href="packages/paper_elements/paper_shadow.html">
+<link rel="import" href="packages/core_elements/core_animated_pages.html">
 
 <!-- Other links -->
 <!-- <link rel="stylesheet" href="arrrrivals.css"> -->
 
-<polymer-element name="ar-board" attributes="refresh width height">
+<polymer-element name="ar-board" attributes="refresh width height columns">
   <template>
     <style>
     :host {
       display: block;
       position:relative;
+    }
+    :host([animate]) .bg {
+      z-index: -1;
     }
     .board {
       display: block;
@@ -28,30 +32,97 @@
       word-wrap:break-word;
       border: 1px solid #eee;
       border-bottom: 0px;
+      box-sizing: border-box;
+      transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.28s;
+    }
+
+
+
+    .multi-column .list {
+      display: -webkit-flex;
+      display: flex;
+      -webkit-flex-flow: column wrap;
+      flex-flow: column wrap;
+      -webkit-align-content: stretch;
+      align-content: stretch;
+    }
+
+
+    [animate] .label.rising {
+      box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      z-index: 10001 !important;
+      background-color: white;
+    }
+    .multi-column [animate] .label.rising {
+    }
+
+    .delta {
+      display: none;
+      color: #00bbd3;
+      font-weight: bold;
+    }
+
+    [animate] .label.rising .delta {
+      display: inline-block;
     }
     </style>
+
+    <div class="bg" fit dummy cross-fade></div>
 
     <arrivals-service id="service" arrivals="{{arrivals}}" lastUpdated="{{lastUpdated}}" refresh={{refresh}}></arrivals-service>
 
     <small>Last updated: {{lastUpdated}}</small>
-    <div id="board" class="board" layout vertical>
+
+
+
+    <core-animated-pages id="pages" selected="{{selected}}" transitions="hero-transition">
+
+    <section>
+    <div id="board" class="board" layout vertical hero-id="board1" hero>
       <paper-shadow z="3"></paper-shadow>
       <template bind><!-- bind is needed for proper if-conditions parsing.-->
-        <template repeat="{{arrival in arrivals}}" if="{{arrivals.length > 0}}">
-          <board-label>
+        <template repeat="{{arrival in arrivals1}}" if="{{arrivals1.length > 0}}">
+          <board-label class="label {{arrival['rising'] ? 'rising':''}}" style="{{ columns>1 ? 'width:' + (1/columns*100).toString() + '%' : '' }}" >
             <h1>{{arrival['time']}}</h1>
             <h2>{{arrival['from']}}</h2>
             <h3>{{arrival['flight']}}</h3>
             <h4>{{arrival['remarks']}}</h4>
+            <div class="delta" hidden?="{{!arrival['rising']}}">UP</div>
           </board-label>
         </template>
-        <template if="{{arrivals.length == 0}}">
+        <template repeat="10" if="{{arrivals1.length == 0}}">
           <board-label>
-          <h1>No flights found</h1>
+          <h1>No flights found {{}}</h1>
           </board-label>
         </template>
       </template>
     </div>
+    </section>
+
+    <section>
+    <div id="board" class="board" layout vertical hero-id="board2" hero>
+      <paper-shadow z="3"></paper-shadow>
+      <template bind><!-- bind is needed for proper if-conditions parsing.-->
+        <template repeat="{{arrival in arrivals2}}" if="{{arrivals2.length > 0}}">
+          <board-label class="label {{arrival['rising'] ? 'rising':''}}" style="{{ columns>1 ? 'width:' + (1/columns*100).toString() + '%' : '' }}" >
+            <h1>{{arrival['time']}}</h1>
+            <h2>{{arrival['from']}}</h2>
+            <h3>{{arrival['flight']}}</h3>
+            <h4>{{arrival['remarks']}}</h4>
+            <div class="delta" hidden?="{{!arrival['rising']}}">UP</div>
+          </board-label>
+        </template>
+        <template repeat="10" if="{{arrivals2.length == 0}}">
+          <board-label>
+          <h1>No flights found {{}}</h1>
+          </board-label>
+        </template>
+      </template>
+    </div>
+    </section>
+
+  </core-animated-pages>
+
   </template>
   <script type="application/dart" src="ar-board.dart"></script>
 </polymer-element>
