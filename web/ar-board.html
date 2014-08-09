@@ -6,6 +6,7 @@
 
 <link rel="import" href="board-label.html">
 <link rel="import" href="arrivals-service.html">
+<link rel="import" href="packages/paper_elements/paper_shadow.html">
 
 <!-- Other links -->
 <!-- <link rel="stylesheet" href="arrrrivals.css"> -->
@@ -34,6 +35,7 @@
 
     <small>Last updated: {{lastUpdated}}</small>
     <div id="board" class="board" layout vertical>
+      <paper-shadow z="3"></paper-shadow>
       <template bind><!-- bind is needed for proper if-conditions parsing.-->
         <template repeat="{{arrival in arrivals}}" if="{{arrivals.length > 0}}">
           <board-label>
