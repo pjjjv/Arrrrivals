@@ -30,8 +30,9 @@
     }
     </style>
 
-    <arrivals-service id="service" arrivals="{{arrivalses}}"></arrivals-service>
+    <arrivals-service id="service" arrivals="{{arrivalses}}" lastUpdated="{{lastUpdated}}"></arrivals-service>
 
+    <small>Last updated: {{lastUpdated}}</small>
     <div id="board" class="board" layout vertical>
       <template repeat="{{arrival in arrivals2}}">
         <board-label>

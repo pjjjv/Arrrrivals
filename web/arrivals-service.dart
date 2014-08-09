@@ -5,12 +5,34 @@ import 'dart:collection';
 import 'package:polymer/polymer.dart';
 
 /**/
-
+/*
+import 'dart:mirrors';
+getTypeName(dynamic obj) {
+  print('type name: '+ reflect(obj).type.reflectedType.toString());
+}*/
 
 @CustomTag('arrivals-service')
 class ArrivalsService extends PolymerElement {
   @observable List<LinkedHashMap> arrivals = new List<LinkedHashMap>();
-  var ajax;
+  Timer timer;
+
+
+  // This will be available as an HTML attribute, for example:
+  //
+  //     <my-playback volume="11">
+  //
+  // It will support initialization and data-binding via <template>:
+  //
+  //     <template>
+  //       <my-playback volume="{{x}}">
+  //     </template>
+  //
+  // If the template is instantiated or given a model, `x` will be
+  // used for this field and updated whenever `volume` changes.
+  /*@published
+  String get lastUpdated;
+  set lastUpdated(String lu);*/
+  @published String lastUpdated;
 
 
   final Map<String, String> statusDict =
@@ -24,109 +46,92 @@ class ArrivalsService extends PolymerElement {
       'S' :'Scheduled',
       'U': 'Unknown'};
 
-  void handleTimeout(Timer timer) {
-    print('timer');
-    this.ajax.go();
+  @published ArrivalsService.created() : super.created() {
+    //print("created");
+    lastUpdated = "Not updated";
   }
 
-  @published ArrivalsService.created() : super.created() {
-    print("created");
+  @override
+  void attached(){
+    super.attached();
+    print("attached");
 
+    //Start listening to REST results from the ajax component.
+    //ajax = querySelector('#ajax'); //cannot access shadowRoot so core-ajax-dart needs to be outside of template. -> no, automatic node selection ($['']) does work with core-ajax-dart inside template, but only from the moment of the 'attached' lifecycle callback.
+    $['ajax'].on["core-response"].listen(parseResponse);
 
-    ajax = querySelector('#ajax'); //cannot access shadowRoot so core-ajax-dart needs to be outside of template.
+    //Start a timer, so we do the ajax every so many seconds.
+    timer = new Timer.periodic(new Duration(seconds: 120), handleTimeout);
+  }
 
-    new Timer.periodic(new Duration(seconds: 120), handleTimeout);
+  @override
+  void detached(){
+    super.detached();
+    //Stop the timer.
+    timer.cancel();
+  }
 
-    //arrivals = querySelector('arrivals');
+  void handleTimeout(Timer timer) {
+    //print('timer');
+    //Do another REST call.
+    $['ajax'].go();
+  }
 
-    ajax.on["core-response"].listen((event) {
-      arrivals = [];
-      var detail = event.detail;
-      var response = detail['response'];
-      print("core-response");
-      //print(response);
+  void parseResponse(CustomEvent event) {
+    arrivals = [];
+    var detail = event.detail;
+    var response = detail['response'];
+    //print("core-response");
+    //print(response);
 
-      var lastUpdated = new DateTime.now();
-      try {
-        if (response == null || response['flightStatuses'] == null) {
-          print('returned');
-          return;
-        }
-      } catch (e) {
-        print('returned');
+    lastUpdated = new DateTime.now().toString();
+    try {
+      if (response == null || response['flightStatuses'] == null) {
+        //print('returned');
         return;
       }
+    } catch (e) {
+      //print('returned');
+      return;
+    }
 
-      var flightStatuses = response['flightStatuses'];
-      //print('flightStatuses ==== ' + flightStatuses.toString());
-      for (var flightStatus in flightStatuses) {
-        //print('flightStatus ==== ' + flightStatus.toString());
-        LinkedHashMap arrival = new LinkedHashMap();
+    var flightStatuses = response['flightStatuses'];
+    //print('flightStatuses ==== ' + flightStatuses.toString());
+    for (var flightStatus in flightStatuses) {
+      //print('flightStatus ==== ' + flightStatus.toString());
+      LinkedHashMap arrival = new LinkedHashMap();
 
-        arrival['flight'] = flightStatus['carrierFsCode'] + ' ' + flightStatus['flightNumber'];
+      arrival['flight'] = flightStatus['carrierFsCode'] + ' ' + flightStatus['flightNumber'];
 
 
-        var departureAirport = flightStatus['departureAirport'];
-        if(departureAirport!=null){
-          arrival['from'] = departureAirport['city'];
-        } else{
-          bool found = false;
-          var airports = response['appendix']['airports'];
-          departureAirport = flightStatus['departureAirportFsCode'];
-          for (var airportData in airports){
-            if(airportData['fs']==departureAirport){
-              departureAirport = airportData['city'];
-              found = true;
-              arrival['from'] = departureAirport;
-            }
-          }
-          if(!found){
-            arrival['from'] = "Unknown";
+      var departureAirport = flightStatus['departureAirport'];
+      if(departureAirport!=null){
+        arrival['from'] = departureAirport['city'];
+      } else{
+        bool found = false;
+        var airports = response['appendix']['airports'];
+        departureAirport = flightStatus['departureAirportFsCode'];
+        for (var airportData in airports){
+          if(airportData['fs']==departureAirport){
+            departureAirport = airportData['city'];
+            found = true;
+            arrival['from'] = departureAirport;
           }
         }
-
-
-        var date = flightStatus['arrivalDate']['dateLocal'];
-        var datetime = DateTime.parse(date);
-        var f = new NumberFormat("00", "en_US");
-        arrival['time'] = f.format(datetime.hour) + ':' + f.format(datetime.minute);
-        var status = flightStatus['status'];
-        arrival['remarks'] = statusDict[status];
-        arrivals.add(arrival);
-        print('arrival: '+arrival.toString());
+        if(!found){
+          arrival['from'] = "Unknown";
+        }
       }
 
-      /*for (arrival in arrivals) {
-            arrival['from']= arrival['from'].toLowerCase().replace(/ /g,"");
-          }*/
 
-    });
+      var date = flightStatus['arrivalDate']['dateLocal'];
+      var datetime = DateTime.parse(date);
+      var f = new NumberFormat("00", "en_US");
+      arrival['time'] = f.format(datetime.hour) + ':' + f.format(datetime.minute);
+      var status = flightStatus['status'];
+      arrival['remarks'] = statusDict[status];
+      arrivals.add(arrival);
+      //print('arrival: '+arrival.toString());
+    }
   }
-
-  /*void arrivalsLoaded(Event e, var detail, Node target) {
-        print("arrivalsLoaded");
-      }*/
 }
-
-
-void arrivalsLoaded(e, detail, node) {
-  print("arrivalsLoaded2");
-}
-
-/*void main() {
-      initPolymer().run(() {
-        var ajax = querySelector('core-ajax-dart');
-
-        var arrivals = querySelector('arrivals');
-
-        ajax.on["core-response"].listen((event) {
-          var detail = event.detail;
-          var response = detail['response'];
-          print("core-response");
-          print(response[0]);
-
-          arrivals = response[0];
-
-        });
-      });
-    }*/
