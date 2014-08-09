@@ -33,7 +33,7 @@ class ArrivalsService extends PolymerElement {
   /*@published
   String get lastUpdated;
   set lastUpdated(String lu);*/
-  @observable String lastUpdated = "Not updated";
+  @published String lastUpdated = "Not updated";
 
 
   final Map<String, String> statusDict =
