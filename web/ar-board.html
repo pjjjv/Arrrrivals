@@ -19,9 +19,6 @@
       display: block;
       position:relative;
     }
-    :host([animate]) .bg {
-      z-index: -1;
-    }
     .board {
       display: block;
       width: 100%;
@@ -32,10 +29,12 @@
       word-wrap:break-word;
       border: 1px solid #eee;
       border-bottom: 0px;
-      box-sizing: border-box;
-      transition: box-shadow 0.28s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.28s;
     }
-
+    .label {
+      box-sizing: border-box;
+      position: relative;
+      transition: box-shadow 0.8s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.8s;
+    }
 
 
     .multi-column .list {
@@ -55,19 +54,7 @@
     }
     .multi-column [animate] .label.rising {
     }
-
-    .delta {
-      display: none;
-      color: #00bbd3;
-      font-weight: bold;
-    }
-
-    [animate] .label.rising .delta {
-      display: inline-block;
-    }
     </style>
-
-    <div class="bg" fit dummy cross-fade></div>
 
     <arrivals-service id="service" arrivals="{{arrivals}}" lastUpdated="{{lastUpdated}}" refresh={{refresh}}></arrivals-service>
 
@@ -76,14 +63,14 @@
 
 
     <template bind><!-- bind is needed for proper if-conditions parsing.-->
-      <!--<template bind if="{{arrivals.length > 0}}">-->
+      <template bind if="{{true}}">
         <core-animated-pages id="pages" selected="{{selected}}" transitions="hero-transition">
 
         <section id="page1">
-        <div id="board1" class="board" layout vertical hero-id="board" hero>
+        <div id="board1" class="board" layout vertical>
           <paper-shadow z="3"></paper-shadow>
           <template repeat="{{arrival in arrivals1}}">
-            <board-label class="label {{arrival['rising'] ? 'rising':''}}" style="{{ columns>1 ? 'width:' + (1/columns*100).toString() + '%' : '' }}" >
+            <board-label class="label {{arrival['rising'] ? 'rising':''}}" hero-id="{{arrival['time']}}" hero style="{{ columns>1 ? 'width:' + (1/columns*100).toString() + '%' : '' }}" >
               <h1>{{arrival['time']}}</h1>
               <h2>{{arrival['from']}}</h2>
               <h3>{{arrival['flight']}}</h3>
@@ -95,10 +82,10 @@
         </section>
 
         <section id="page2">
-        <div id="board2" class="board" layout vertical hero-id="board" hero>
+        <div id="board2" class="board" layout vertical>
           <paper-shadow z="3"></paper-shadow>
           <template repeat="{{arrival in arrivals2}}">
-            <board-label class="label {{arrival['rising'] ? 'rising':''}}" style="{{ columns>1 ? 'width:' + (1/columns*100).toString() + '%' : '' }}" >
+            <board-label class="label {{arrival['rising'] ? 'rising':''}}" hero-id="{{arrival['time']}}" hero style="{{ columns>1 ? 'width:' + (1/columns*100).toString() + '%' : '' }}" >
               <h1>{{arrival['time']}}</h1>
               <h2>{{arrival['from']}}</h2>
               <h3>{{arrival['flight']}}</h3>
@@ -110,15 +97,15 @@
         </section>
 
         </core-animated-pages>
-      <!--</template>
+      </template>
 
-      <template bind if="{{arrivals.length == 0}}">
+      <template bind if="{{false}}">
         <div id="board3" class="board" layout vertical>
           <board-label>
           <h1>No flights found</h1>
           </board-label>
         </div>
-      </template>-->
+      </template>
     </template>
 
   </template>

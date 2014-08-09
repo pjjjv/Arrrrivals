@@ -5,7 +5,7 @@ import 'dart:async';
 
 @CustomTag('ar-board')
 class Board extends PolymerElement {
-  List<LinkedHashMap> arrivalsUnderwater;
+  List<LinkedHashMap> arrivalsUnderwater = new List<LinkedHashMap>();
   @published int columns=1;
   @published int selected=0;
   @published List<LinkedHashMap> arrivals1;
@@ -41,14 +41,20 @@ class Board extends PolymerElement {
   Board.created() : super.created() {
     print("board created");
     var board = $['board1'];
-    board.style.width = width;
-    board.style.height = height;
+    if(board != null){
+      board.style.width = width;
+      board.style.height = height;
+    }
     board = $['board2'];
-    board.style.width = width;
-    board.style.height = height;
-    /*board = $['board3'];
-    board.style.width = width;
-    board.style.height = height;*/
+    if(board != null){
+      board.style.width = width;
+      board.style.height = height;
+    }
+    board = $['board3'];
+    if(board != null){
+      board.style.width = width;
+      board.style.height = height;
+    }
   }
 
   @override
@@ -75,11 +81,15 @@ class Board extends PolymerElement {
   void handleFlipTimeout(Timer flipTimer) {
     print('flipTimer');
     if (arrivalsUnderwater!=null && arrivalsUnderwater.length > 0){
-      //int first = randomizer.nextInt(arrivals.length) +1;
-      //int second = randomizer.nextInt(arrivals.length) +1;
+      //int first = randomizer.nextInt(arrivals.length);
+      //int second = randomizer.nextInt(arrivals.length);
+
+
       List<LinkedHashMap> temp = arrivals;
       temp.shuffle(randomizer);
       arrivals = temp;
+
+      //arrivalsUnderwater[first]['rising'] = true;
     }
   }
 
