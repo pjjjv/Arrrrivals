@@ -40,9 +40,15 @@ class Board extends PolymerElement {
 
   Board.created() : super.created() {
     print("board created");
-    var board = $['board'];
+    var board = $['board1'];
     board.style.width = width;
     board.style.height = height;
+    board = $['board2'];
+    board.style.width = width;
+    board.style.height = height;
+    /*board = $['board3'];
+    board.style.width = width;
+    board.style.height = height;*/
   }
 
   @override
